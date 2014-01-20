@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true">
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/photolayout"
+                  android:orientation="horizontal"
+                  android:background="@drawable/card_background"
+                  android:padding="@dimen/padding"
+                  android:layout_margin="@dimen/bigger_margin"
+                  android:onClick="clickNoAction">
+                  <ImageView android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:id="@+id/photo"
+                             android:src="@drawable/image_vectorized"/>
+                  <LinearLayout android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:background="@android:color/transparent"
+                                android:orientation="vertical">
+                                <TextView android:layout_width="fill_parent"
+                                          android:layout_height="fill_parent"
+                                          android:textColor="@color/text_color"
+                                          android:text="@string/name"
+                                          android:layout_weight="1"
+                                          android:gravity="center"
+                                          android:background="@android:color/transparent"
+                                          android:textStyle="bold"
+                                          android:fontFamily="sans-serif-condensed"
+                                          android:textSize="@dimen/name_text_size"/>
+                                <TextView android:layout_width="fill_parent"
+                                          android:layout_height="fill_parent"
+                                          android:textColor="@color/text_color"
+                                          android:text="@string/job"
+                                          android:layout_weight="1"
+                                          android:gravity="center"
+                                          android:background="@android:color/transparent"
+                                          android:textStyle="italic"
+                                          android:fontFamily="sans-serif-condensed"
+                                          android:textSize="@dimen/job_text_size"/>
+                                </LinearLayout>
+                  </LinearLayout>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="biggerQRCode"
+            android:visibility="invisible"
+            android:id="@+id/imageView" android:layout_below="@id/photolayout" android:layout_centerHorizontal="true"
+            android:src="@drawable/qr_code_website" android:contentDescription="@string/imageview_qrcode_accessibility"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:onClick="shareLink"
+            android:layout_below="@id/imageView"
+            android:layout_margin="@dimen/little_margin"
+            android:src="@drawable/ic_share_vectorized" android:background="@android:color/transparent"
+            android:layout_centerHorizontal="true" android:padding="@dimen/padding"/>
+</RelativeLayout>

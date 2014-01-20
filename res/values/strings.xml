@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rokard</string>
+    <string name="imageview_qrcode_accessibility">QR Code containing a URL</string>
+    <string name="share_url_title">Share URL</string>
+    <string name="share_url_object">Take a look to my hub page: </string>
+    <string name="data_beamed_correctly_message">Data beamed correctly</string>
+</resources>
