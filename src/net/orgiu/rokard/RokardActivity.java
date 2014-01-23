@@ -32,7 +32,7 @@ public class RokardActivity extends Activity implements NfcAdapter.CreateNdefMes
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_backup);
+        setContentView(R.layout.main);
 
         if(isBeamAvailable()){
             //gets NFC Adapter
