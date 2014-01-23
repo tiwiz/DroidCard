@@ -87,7 +87,7 @@ public class RokardActivity extends Activity implements NfcAdapter.CreateNdefMes
 
     public void shareLink(View w){
 
-        final StartChooserRunnable runnable = new StartChooserRunnable(this);
+        final StartChooserTask runnable = new StartChooserTask(this);
         final View parameterView = w;
 
         final Animation click = AnimationUtils.loadAnimation(this, R.anim.click);
@@ -111,7 +111,7 @@ public class RokardActivity extends Activity implements NfcAdapter.CreateNdefMes
     public void biggerQRCode(View w){
 
         final Animation openActivityAnimation = AnimationUtils.loadAnimation(this, R.anim.open_activity);
-        final StartActivityRunnable runnable = new StartActivityRunnable(this);
+        final StartActivityTask runnable = new StartActivityTask(this);
 
         openActivityAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -128,7 +128,7 @@ public class RokardActivity extends Activity implements NfcAdapter.CreateNdefMes
     public void clickNoAction(View z){
 
         final Animation clickAnimation = AnimationUtils.loadAnimation(this, R.anim.click);
-        final StartBrowserOnCV startBrowser = new StartBrowserOnCV();
+        final StartBrowserOnCV startBrowser = new StartBrowserOnCV(this);
 
         clickAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -171,35 +171,47 @@ public class RokardActivity extends Activity implements NfcAdapter.CreateNdefMes
             }
         }
     } 
-    public final void callActivity(Intent intent, Bundle arguments){
+    public void callActivity(Intent intent, Bundle arguments){
         startActivityForResult(intent,REQUEST_CODE,arguments);
     }
 
-    private final class StartActivityRunnable extends AsyncTask<Void, Void, Void>{
+    private static final class StartActivityTask extends AsyncTask<Void, Void, Void>{
 
         private Context mContext;
+        private RokardActivity callerActivity;
 
-        public StartActivityRunnable(Context mContext){
-            this.mContext = mContext;
+        public StartActivityTask(RokardActivity callerActivity){
+            this.mContext = callerActivity.getApplicationContext();
+            this.callerActivity = callerActivity;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             Intent activityIntent = new Intent(mContext, QRActivity.class);
             Bundle options = ActivityOptions.makeCustomAnimation(mContext, R.anim.flip_side_in, R.anim.flip_side_out).toBundle();
-            callActivity(activityIntent,options);
+            callerActivity.callActivity(activityIntent,options);
+            mContext = null;
+            callerActivity = null;
             return null;
         }
     }
 
-    private final class StartBrowserOnCV extends AsyncTask<Void, Void, Void> {
+    private static final class StartBrowserOnCV extends AsyncTask<Void, Void, Void> {
+
+        private Context mContext;
+
+        public StartBrowserOnCV(Context mContext){
+            this.mContext = mContext;
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            String url = getString(R.string.curriculum_url);
+            final Context fContext = mContext;
+            mContext = null; //releases the old context
+            String url = fContext.getString(R.string.curriculum_url);
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
-            startActivity(i);
+            fContext.startActivity(i);
             return null;
         }
     }
